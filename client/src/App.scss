@@ -3,8 +3,54 @@
 * {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
 body {
   font-family: "Roboto", sans-serif;
+}
+
+a {
+  text-decoration: none;
+}
+.container {
+  width: 1200px;
+  max-width: 90%;
+  margin: 0 auto;
+}
+
+.heading {
+  text-align: center;
+  font-weight: 500;
+  margin-bottom: 2rem;
+  font-size: 1.5rem;
+}
+
+.form-wrapper {
+  width: 540px;
+  max-width: 90%;
+  margin: 0 auto;
+  padding-bottom: 2rem;
+  label {
+    display: block;
+    margin-bottom: 1rem;
+  }
+  .input-group {
+    margin-bottom: 1rem;
+    input {
+      display: block;
+      width: 100%;
+      padding: 0.8rem 0rem;
+      text-indent: 20px;
+    }
+  }
+
+  button {
+    display: block;
+    width: 100%;
+    background-color: black;
+    color: white;
+    cursor: pointer;
+    padding: 0.8rem 0rem;
+  }
 }

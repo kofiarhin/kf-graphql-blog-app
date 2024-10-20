@@ -1,0 +1,27 @@
+{
+  "name": "user-authentication-grapql",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "client": "npm run dev --prefix client",
+    "server": "nodemon --env-file=.env index.js",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@apollo/server": "^4.11.0",
+    "apollo-server-errors": "^3.3.1",
+    "bcryptjs": "^2.4.3",
+    "graphql": "^16.9.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.7.0"
+  },
+  "type": "module",
+  "devDependencies": {
+    "concurrently": "^9.0.1"
+  }
+}

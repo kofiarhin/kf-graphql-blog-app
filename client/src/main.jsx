@@ -11,11 +11,11 @@ const client = new ApolloClient({
 });
 
 createRoot(document.getElementById("root")).render(
-  <ApolloProvider client={client}>
-    <StrictMode>
-      <Provider store={store}>
+  <Provider store={store}>
+    <ApolloProvider client={client}>
+      <StrictMode>
         <App />
-      </Provider>
-    </StrictMode>
-  </ApolloProvider>
+      </StrictMode>
+    </ApolloProvider>
+  </Provider>
 );

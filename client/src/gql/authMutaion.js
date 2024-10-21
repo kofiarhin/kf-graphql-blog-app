@@ -10,4 +10,14 @@ const LOGIN_USER = gql`
   }
 `;
 
-export { LOGIN_USER };
+const CREATE_USER = gql`
+  mutation CreateUser($userInput: UserInput!) {
+    createUser(userInput: $userInput) {
+      name
+      email
+      password
+    }
+  }
+`;
+
+export { LOGIN_USER, CREATE_USER };

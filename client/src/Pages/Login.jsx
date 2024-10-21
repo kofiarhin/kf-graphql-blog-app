@@ -1,38 +1,25 @@
-import { useState } from "react";
-import { gql, useMutation, useQuery } from "@apollo/client";
+import { useState, useEffect } from "react";
+import { gql, useMutation } from "@apollo/client";
 import { LOGIN_USER } from "../gql/authMutaion";
-import { useDispatch } from "react-redux";
-import { loginSuccess } from "../redux/auth/authSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { loginSuccess, reset } from "../redux/auth/authSlice";
 import { useNavigate } from "react-router-dom";
-
-const USERS_QUERY = gql`
-  query UsersQuery {
-    users {
-      name
-      email
-      password
-      posts {
-        title
-        body
-      }
-    }
-  }
-`;
-
-const CREATE_USER = gql`
-  mutation CreateUser($userInput: UserInput!) {
-    createUser(userInput: $userInput) {
-      name
-      email
-      password
-    }
-  }
-`;
-``;
 
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { user, isSuccess, isError, message } = useSelector(
+    (state) => state.auth
+  );
+
+  useEffect(() => {
+    if (isSuccess || user) {
+      navigate("/profile");
+    }
+    dispatch(reset());
+  }, [user, isSuccess, message]);
+
+  const [loginMessage, setLoginMessage] = useState("");
   const [formData, setFormData] = useState({
     email: "kofiarhin@gmail.com",
     password: "password",
@@ -40,20 +27,7 @@ const Login = () => {
 
   const { email, password } = formData;
 
-  const {
-    loading: usersLoading,
-    error: usersError,
-    data: usersData,
-  } = useQuery(USERS_QUERY);
-
-  const [createUser, { loading, error }] = useMutation(CREATE_USER, {
-    refetchQueries: [{ query: USERS_QUERY }], // Refetch the users query after the mutation
-  });
-
-  const [
-    loginUser,
-    { loading: loginLoading, data: loginData, error: loginError },
-  ] = useMutation(LOGIN_USER);
+  const [loginUser] = useMutation(LOGIN_USER);
 
   const handleChange = (e) => {
     setFormData((prevState) => ({
@@ -70,30 +44,25 @@ const Login = () => {
       password,
     };
 
-    const { data: loginData } = await loginUser({
-      variables: {
-        loginUserInput: {
-          email,
-          password,
+    try {
+      const { data: loginData } = await loginUser({
+        variables: {
+          loginUserInput: {
+            email,
+            password,
+          },
         },
-      },
-    });
+      });
 
-    if (loginData) {
-      console.log("login success", loginData.loginUser);
-      dispatch(loginSuccess(loginData.loginUser));
-      navigate("/profile");
+      if (loginData) {
+        dispatch(loginSuccess(loginData.loginUser));
+        localStorage.setItem("user", JSON.stringify(loginData));
+        setLoginMessage = "";
+      }
+    } catch (error) {
+      console.log(error.message);
+      setLoginMessage(error.message);
     }
-
-    // createUser({
-    //   variables: {
-    //     userInput: {
-    //       name,
-    //       email,
-    //       password,
-    //     },
-    //   },
-    // });
   };
   return (
     <div>
@@ -122,6 +91,7 @@ const Login = () => {
               onChange={handleChange}
             />
           </div>
+          <p className="error"> {loginMessage} </p>
           <button type="submit">Login</button>
         </form>
       </div>

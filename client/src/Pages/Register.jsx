@@ -1,31 +1,13 @@
 import { useState } from "react";
 import { gql, useMutation, useQuery } from "@apollo/client";
-
-const USERS_QUERY = gql`
-  query UsersQuery {
-    users {
-      name
-      email
-      password
-      posts {
-        title
-        body
-      }
-    }
-  }
-`;
-
-const CREATE_USER = gql`
-  mutation CreateUser($userInput: UserInput!) {
-    createUser(userInput: $userInput) {
-      name
-      email
-      password
-    }
-  }
-`;
+import { USERS_QUERY } from "../gql/authQuerires";
+import { CREATE_USER } from "../gql/authMutaion";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
+  const navigate = useNavigate();
+
+  const [registerError, setRegisterError] = useState("");
   const [formData, setFormData] = useState({
     name: "another one",
     email: "testtesttest@gmail.com",
@@ -51,24 +33,40 @@ const Register = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const dataToSubmit = {
-      name,
-      email,
-      password,
-    };
+    setRegisterError("");
 
-    createUser({
-      variables: {
-        userInput: {
-          name,
-          email,
-          password,
+    try {
+      const dataToSubmit = {
+        name,
+        email,
+        password,
+      };
+
+      const { data: registerData } = await createUser({
+        variables: {
+          userInput: {
+            name,
+            email,
+            password,
+          },
         },
-      },
-    });
+      });
+
+      if (registerData) {
+        navigate("/login");
+      }
+    } catch (error) {
+      console.log(error.message);
+      // E1100 duplicate key
+      if (error.message.includes("E11000 duplicate key")) {
+        setRegisterError("Email already taken");
+      } else if (error.message.includes("User validation failed")) {
+        setRegisterError("please fill out all fields");
+      }
+    }
   };
   return (
     <div>
@@ -108,6 +106,7 @@ const Register = () => {
               onChange={handleChange}
             />
           </div>
+          <p className="error"> {registerError} </p>
           <button type="submit">Rgister</button>
         </form>
       </div>

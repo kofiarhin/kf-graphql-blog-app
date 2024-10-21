@@ -7,6 +7,11 @@ import { useDispatch } from "react-redux";
 const Header = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
+
+  const handleLogout = () => {
+    dispatch(logout());
+    localStorage.removeItem("user");
+  };
   return (
     <div>
       <header className="header">
@@ -18,7 +23,11 @@ const Header = () => {
 
           <nav>
             {user ? (
-              <button onClick={() => dispatch(logout())}>Logout</button>
+              <>
+                <Link to="/posts">Posts</Link>
+                <Link to="/posts/create">Create Post</Link>
+                <button onClick={handleLogout}>Logout</button>
+              </>
             ) : (
               <>
                 <Link to="/">Home</Link>

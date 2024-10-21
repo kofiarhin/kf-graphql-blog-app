@@ -11,7 +11,10 @@ const Profile = () => {
   }, [user]);
   return (
     <div>
-      <h1 className="heading">Profiile</h1>
+      <h1 className="heading">
+        {" "}
+        Welcome <span>{user?.name}</span>{" "}
+      </h1>
     </div>
   );
 };

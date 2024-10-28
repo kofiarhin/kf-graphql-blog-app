@@ -16,12 +16,12 @@ const Header = () => {
     <div>
       <header className="header">
         <div className="container">
-          <Link>
-            {" "}
-            <h1>Logo</h1>
+          <Link to="/">
+            <h1>PostWave</h1>
           </Link>
 
           <nav>
+            <Link to="/">Home</Link>
             <Link to="/posts">Posts</Link>
             {user ? (
               <>
@@ -31,7 +31,6 @@ const Header = () => {
               </>
             ) : (
               <>
-                <Link to="/">Home</Link>
                 <Link to="/register">Register</Link>
                 <Link to="/login">Login</Link>
               </>

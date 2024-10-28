@@ -82,9 +82,17 @@ a {
     background-color: red;
     color: white;
   }
+  &.btn-primary {
+    background-color: blue;
+    color: white;
+  }
 }
 
 .text {
   font-size: 1.2rem;
   margin-bottom: 1rem;
+}
+
+.mg-right {
+  margin-right: 1rem;
 }

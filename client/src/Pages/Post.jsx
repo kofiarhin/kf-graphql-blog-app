@@ -40,7 +40,7 @@ const Post = () => {
       <p className="text"> {data.post?.body} </p>
       {user && user._id === data.post.user_id ? (
         <>
-          <button className="btn btn-delete" onClick={handleDelete}>
+          <button className="btn btn-delete mg-right" onClick={handleDelete}>
             Delete Post
           </button>
           <Link to={`/posts/edit/${data.post._id}`} className="btn btn-primary">

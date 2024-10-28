@@ -1,6 +1,6 @@
 import { ApolloServer } from "@apollo/server";
 import { startStandaloneServer } from "@apollo/server/standalone";
-import typeDefs from "./graphql/schema.js";
+import { typeDefs, GraphQLDateTime } from "./graphql/schema.js";
 import resolvers from "./graphql/resolvers.js";
 import connectDB from "./config/db.js";
 import reset from "./utility/reset.js";

@@ -22,9 +22,10 @@ const Header = () => {
           </Link>
 
           <nav>
+            <Link to="/posts">Posts</Link>
             {user ? (
               <>
-                <Link to="/posts">Posts</Link>
+                <Link to="/profile">Profile</Link>
                 <Link to="/posts/create">Create Post</Link>
                 <button onClick={handleLogout}>Logout</button>
               </>

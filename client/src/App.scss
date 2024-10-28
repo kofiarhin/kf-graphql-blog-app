@@ -52,6 +52,14 @@ a {
       width: 100%;
       padding: 0.8rem 0rem;
       text-indent: 20px;
+      font-size: 1.2rem;
+    }
+    textarea {
+      width: 100%;
+      font-size: 1.2rem;
+      text-indent: 20px;
+      padding-top: 1rem;
+      min-height: 200px;
     }
   }
 
@@ -63,4 +71,20 @@ a {
     cursor: pointer;
     padding: 0.8rem 0rem;
   }
+}
+
+.btn {
+  padding: 0.8rem 2rem;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  &.btn-delete {
+    background-color: red;
+    color: white;
+  }
+}
+
+.text {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
 }

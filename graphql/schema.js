@@ -1,3 +1,4 @@
+import { GraphQLDateTime } from "graphql-scalars";
 const typeDefs = `#graphql
 
 type User {
@@ -11,7 +12,8 @@ type User {
 type Post { 
     _id: ID,
     title: String
-    body: String,
+    body: String
+    createdAt: String,
     user_id: String
     user: User
 }
@@ -24,6 +26,7 @@ type Query {
 }
 
 type Login {
+    _id: String
     name: String
     email: String
     token: String
@@ -67,4 +70,4 @@ input UserInput {
 }
 `;
 
-export default typeDefs;
+export { typeDefs, GraphQLDateTime };

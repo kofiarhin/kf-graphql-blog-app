@@ -19,7 +19,7 @@ const Login = () => {
     dispatch(reset());
   }, [user, isSuccess, message]);
 
-  const [loginMessage, setLoginMessage] = useState("");
+  let [loginMessage, setLoginMessage] = useState("");
   const [formData, setFormData] = useState({
     email: "kofiarhin@gmail.com",
     password: "password",
@@ -45,7 +45,7 @@ const Login = () => {
     };
 
     try {
-      const { data: loginData } = await loginUser({
+      let { data: loginData } = await loginUser({
         variables: {
           loginUserInput: {
             email,
@@ -56,10 +56,11 @@ const Login = () => {
 
       if (loginData) {
         dispatch(loginSuccess(loginData.loginUser));
-        localStorage.setItem("user", JSON.stringify(loginData));
+        localStorage.setItem("user", JSON.stringify(loginData.loginUser));
         setLoginMessage = "";
       }
     } catch (error) {
+      console.log(error);
       console.log(error.message);
       setLoginMessage(error.message);
     }

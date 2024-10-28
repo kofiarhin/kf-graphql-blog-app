@@ -24,7 +24,7 @@ const resolvers = {
     },
 
     posts: async (_, args) => {
-      const posts = await Post.find();
+      const posts = await Post.find().sort({ createdAt: -1 });
       return posts;
     },
     post: async (_, { id }) => {
@@ -132,8 +132,6 @@ const resolvers = {
 
       const foundPost = await Post.findById(id);
 
-      console.log(foundPost);
-
       if (!foundPost) {
         throw new GraphQLError("post not found", {
           extensions: { code: "POST_NOT_FOUND" },
@@ -201,8 +199,11 @@ const resolvers = {
 
       // generate token
       const token = generateToken(user._id);
-
-      console.log(token);
+      const dataToReturn = {
+        id: user._id,
+        ...user._doc,
+        token,
+      };
 
       return {
         ...user._doc,
